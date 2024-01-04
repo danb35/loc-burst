@@ -1,0 +1,80 @@
+<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	<title>Library of Congress Call Number Conversion</title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+	<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+	<link rel="stylesheet" href="css/style.css?v=2">
+
+	<!-- Enbling this modifies the DOM. Not recommended during active development, may cause preview flickering -->
+	<!-- <script src="js/libs/modernizr-1.7.min.js"></script> -->
+</head>
+<body>
+	<div id="header-container">
+		<header class="wrapper">
+			<h1 id="title">&nbsp;<br></h1>
+			<nav>
+				<ul>
+					<li><a href="#problem">PROBLEM</a></li>
+					<li><a href="#solution">SOLUTION</a></li>
+					<li><a href="#limitations">LIMITATIONS</a></li>
+					<li><a href="#notes">NOTES</a></li>
+				</ul>
+			</nav>
+		</header>
+	</div>
+	<div id="main" class="wrapper">
+		<aside>
+			<h4>Conversion Tool<br></h4>
+			<p>Upload a .csv file containing LC call numbers that you want to convert.<br></p>
+			<FORM enctype="multipart/form-data" METHOD="POST" ACTION="uploader.php">
+
+  <input type = "hidden" name="MAX_FILE_SIZE" value = "1000000" />
+  Choose a file to upload: <input name = "uploadedfile" type = "file" />
+  <input type = "submit" value = "Upload File" />
+</FORM>
+
+
+		</aside>
+		<article>
+			<header>
+				<h2>Printing Spine Labels<br></h2>
+				<p>This page describes printing spine labels for books (and other materials that might be in a library) using Library of Congress call numbers. &nbsp;It also gives a utility to convert those call numbers into a format that&rsquo;s more easily usable, and fits better, on labels.<br></p>
+			</header>
+			<a name="problem"></a><h3>The Problem<br></h3>
+				<p>Cataloging software like <a href="http://www.librarything.com">librarything.com</a> makes it easy to find call numbers for your materials from other libraries, including the Library of Congress. &nbsp;However, those numbers are stored in the database in a single line, and look something like &ldquo;TS536.6.B6 D4 1995&rdquo;. &nbsp;When printed on a spine label, this call number would ordinarily look more like:<br><br>&nbsp; TS<br>&nbsp; 536<br>&nbsp; .6<br>&nbsp; .B6<br>&nbsp; D4<br>&nbsp; 1994<br><br>Since none of these fields is of a fixed length (e.g., the top line can be 1-3 letters, the second line can be any number of digits, etc.), and not all of them are present for any given item, breaking out a call number into its various elements can be a tedious manual process.<br></p>
+			<a name="solution"></a><h3>A Solution<br></h3>
+				<p>The tool in the sidebar on this page converts Library of Congress-style call numbers from a single line into their parts. &nbsp;Upload a .csv (comma-separated values) file containing the call number as the first field in each row, with whatever other data you want in following fields. &nbsp;I&rsquo;d suggest date as the second field, but that&rsquo;s up to you. &nbsp;Your uploaded file should have a header row indicating what each column contains.<br><br>When you upload your file, this tool will convert the call number into five separate fields corresponding to the first five lines of the call number shown above: the alphabetic portion of the classification, the numeric portion of the classification, the decimal portion of the classification, the first cutter, and the second cutter. &nbsp;This tool does not recognize dates from the LC call numbers, as the imported numbers frequently don&rsquo;t include the dates. &nbsp;This is why I suggest including the date as a separate field in your .csv file.<br><br>Any other fields you have in your data will be returned untouched. &nbsp;Once you download the converted file, your data is deleted from the server.<br></p>
+			<a name="limitations"></a><h3>Limitations<br></h3>
+				<p>The conversion tool is still in an early stage of development, and some errors or inconsistencies are not unexpected. &nbsp;The tool will return &ldquo;ERROR&rdquo; for any call numbers it can&rsquo;t parse.<br><br>The code that handles CSV output isn&rsquo;t very smart. &nbsp;This means that if any of your data includes commas, it will be split into multiple fields in your output. &nbsp;For this reason, I recommend that if you include titles in your data, they be the last field.<br></p>
+       	<a name="notes"></a><h3>Usage Notes<br></h3>
+				<p>If you&rsquo;re using Microsoft Excel, at least on a Mac, you&rsquo;ll need to make sure to import the .csv file (from within Excel, File menu, Import), and not simply open it (i.e., double-click on the file). &nbsp;In the import wizard, you&rsquo;ll need to specify that the third column (named ClassNumDec) is to be imported as text, rather than as general or number. &nbsp;Otherwise, Excel will add leading zeroes to the contents of that field (e.g., turning .8 into 0.8). &nbsp;This will mess up your labels.<br><br>Once you have imported the data into Excel, you can weed out and correct any rows with errors, and use the Mail Merge feature in Word to prepare and print the labels.<br><br>For the label layout, I use Avery 5160 labels (standard mailing labels, 2.63&rdquo; wide x 1&rdquo; high, 30 per page). &nbsp;I include all five fields of the call number, in addition to the date and the title, on the label, with each field on its own line. &nbsp;I use 9-point Helvetica Bold for the call number and date, and indent those fields one inch from the left margin of the label. &nbsp;For the titles, I use 6-point Helvetica, and center the title on the label. &nbsp;I then sort the labels to be alpha by title, so I can easily find which label goes with a given book. &nbsp;Note that Excel&rsquo;s sort feature isn&rsquo;t very smart either, and doesn&rsquo;t know that it shouldn&rsquo;t sort on &ldquo;the&rdquo;, so all the titles starting with &ldquo;the&rdquo; will be grouped together.<br></p>
+			<footer>
+			</footer>
+		</article>
+	</div>
+	<div id="footer-container">
+		<footer class="wrapper">
+		</footer>
+	</div>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+	<script>!window.jQuery && document.write(unescape('%3Cscript src="js/libs/jquery-1.5.1.min.js"%3E%3C/script%3E'))</script>
+	<script src="js/script.js"></script>
+	<!--[if lt IE 7 ]>
+	<script src="js/libs/dd_belatedpng.js"></script>
+	<script> DD_belatedPNG.fix('img, .png_bg');</script>
+	<![endif]-->
+</body>
+</html>
