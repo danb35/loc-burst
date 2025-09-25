@@ -1,6 +1,6 @@
 <?php
   include 'burstloc.php';
-  ini_set('auto_detect_line_endings',TRUE);
+  // ini_set('auto_detect_line_endings',TRUE);
   $uptmpfile = $_FILES['uploadedfile']['tmp_name'];
   $uploaded_file = $_FILES['uploadedfile']['name'];
   $filetype = pathinfo ($uploaded_file,PATHINFO_EXTENSION);
@@ -23,7 +23,7 @@
     
     //process the file  
     
-    $outfile = tempnam (sys_get_temp_dir, 'locoutput');
+    $outfile = tempnam (sys_get_temp_dir(), 'locoutput');
     $outfile_handle = fopen($outfile, "w");
     $infile_handle = fopen($uptmpfile, "r");
     
